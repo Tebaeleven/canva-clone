@@ -29,9 +29,6 @@ export const useAutoResize = ({ canvas, container }: UseAutoResizeProps) => {
       .getObjects()
       .find((object) => object.name === "clip");
 
-    // clipするオブジェクトがない場合、処理を終了
-    if (!localWorkspace) return;
-
     // localWorkspaceをcontainerにフィットさせるスケールを計算
     //横幅、高さがlocalWorkspaceの横幅、高さになるようにスケールを計算
     // @ts-ignore
@@ -47,6 +44,9 @@ export const useAutoResize = ({ canvas, container }: UseAutoResizeProps) => {
     // canvasの中心を基準にズーム
     canvas.setViewportTransform(fabric.iMatrix.concat());
     canvas.zoomToPoint(new fabric.Point(center.left, center.top), zoom);
+
+    // clipするオブジェクトがない場合、処理を終了
+    if (!localWorkspace) return;
 
     // localWorkspaceの中心座標を取得
     const workspaceCenter = localWorkspace.getCenterPoint();
