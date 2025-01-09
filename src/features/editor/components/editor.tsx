@@ -1,13 +1,13 @@
 "use client";
 
-import useEditor from "@/app/features/editor/hooks/use-editor";
+import useEditor from "@/features/editor/hooks/use-editor";
 import { fabric } from "fabric";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Navbar } from "@/app/features/editor/components/navbar";
-import { Sidebar } from "@/app/features/editor/components/sidebar";
-import { Toolbar } from "@/app/features/editor/components/toolbar";
-import { Footer } from "@/app/features/editor/components/footer";
-import { ActiveTool } from "@/app/features/editor/components/types";
+import { Navbar } from "@/features/editor/components/navbar";
+import { Sidebar } from "@/features/editor/components/sidebar";
+import { Toolbar } from "@/features/editor/components/toolbar";
+import { Footer } from "@/features/editor/components/footer";
+import { ActiveTool } from "@/features/editor/components/types";
 import { ShapeSidebar } from "./shape-sidebar";
 
 export const Editor = () => {

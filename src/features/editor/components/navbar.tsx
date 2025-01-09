@@ -1,6 +1,6 @@
 "use client";
 
-import { Logo } from "@/app/features/editor/components/logo";
+import { Logo } from "@/features/editor/components/logo";
 import { Hint } from "@/components/hint";
 import { Button } from "@/components/ui/button";
 import {
