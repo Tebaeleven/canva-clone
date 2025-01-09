@@ -1,7 +1,13 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { fabric } from "fabric";
+import { useAutoResize } from "./use-auto-resize";
 
 const useEditor = () => {
+  const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);
+  const [container, setContainer] = useState<HTMLDivElement | null>(null);
+
+  useAutoResize({ canvas, container });
+
   const init = useCallback(
     ({
       initialCanvas,
@@ -20,6 +26,7 @@ const useEditor = () => {
         cornerStrokeColor: "#3b82f6",
       });
 
+      //白いクリップオブジェクトを作成
       const initialWorkspace = new fabric.Rect({
         width: 900,
         height: 1200,
@@ -33,6 +40,8 @@ const useEditor = () => {
         }),
       });
 
+      //クリップパスの設定
+      //キャンバス上で表示される領域をinitialWorkspaceで制限
       initialCanvas.clipPath = initialWorkspace;
 
       //fabricjsのキャンバスサイズの設定
@@ -42,7 +51,9 @@ const useEditor = () => {
       initialCanvas.add(initialWorkspace);
       initialCanvas.centerObject(initialWorkspace);
       initialCanvas.clipPath = initialWorkspace;
-      console.log("initializing editor");
+
+      setCanvas(initialCanvas);
+      setContainer(initialContainer);
 
       const test = new fabric.Rect({
         width: 100,
