@@ -15,6 +15,7 @@ export const Editor = () => {
 
   const onChangeActiveTool = useCallback(
     (tool: ActiveTool) => {
+      //同じツールが押された時には選択ツールに戻す
       if (tool === activeTool) {
         return setActiveTool("select");
       }

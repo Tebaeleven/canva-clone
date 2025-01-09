@@ -32,9 +32,9 @@ interface NavbarProps {
 
 export const Navbar = ({ activeTool, onChangeActiveTool }: NavbarProps) => {
   return (
-    <nav className="w-full flex items-center p-4 h-[68px] gap-x-8 border-b lg:pl-[34px]">
+    <nav className="w-full flex items-center p-4 h-[68px] gap-x-8 border-b lg:pl-[34px] bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
       <Logo />
-      <div className="w-full flex items-center gap-x-1 h-full">
+      <div className="w-full flex items-center gap-x-1 h-full text-white font-semibold">
         {/* メニュー */}
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
@@ -68,7 +68,7 @@ export const Navbar = ({ activeTool, onChangeActiveTool }: NavbarProps) => {
             onClick={() => {
               onChangeActiveTool("select");
             }}
-            className={cn(activeTool === "select" && "bg-gray-100")}
+            className={cn(activeTool === "select" && "bg-gray-700")}
           >
             <MousePointer2 />
           </Button>
@@ -96,8 +96,8 @@ export const Navbar = ({ activeTool, onChangeActiveTool }: NavbarProps) => {
 
         <Separator orientation="vertical" className="mx-2" />
         <div className="flex items-center gap-x-2">
-          <BsCloudCheck className="size-[20px] text-muted-foreground" />
-          <div className="text-xs text-muted-foreground">保存済み</div>
+          <BsCloudCheck className="size-[20px] text-white" />
+          <div className="text-xs text-white">保存済み</div>
         </div>
         <div className="ml-auto flex items-center gap-x-4">
           <DropdownMenu>
