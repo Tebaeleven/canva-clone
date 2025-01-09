@@ -9,6 +9,7 @@ import {
   RECTANGLE_OPTIONS,
   TRIANGLE_OPTIONS,
 } from "../components/types";
+import { useCanvasEvent } from "./use-canvas-events";
 
 const buildEditor = ({ canvas }: BuildEditorProps): Editor => {
   const getWorkspace = (canvas: fabric.Canvas) => {
@@ -101,8 +102,11 @@ const buildEditor = ({ canvas }: BuildEditorProps): Editor => {
 const useEditor = () => {
   const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);
   const [container, setContainer] = useState<HTMLDivElement | null>(null);
+  const [selectedObject, setSelectedObject] = useState<fabric.Object[]>([]);
 
   useAutoResize({ canvas, container });
+
+  useCanvasEvent({ canvas, container, setSelectedObject });
 
   const editor = useMemo(() => {
     if (canvas) {
