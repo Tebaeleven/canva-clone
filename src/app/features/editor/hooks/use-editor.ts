@@ -28,8 +28,8 @@ const useEditor = () => {
 
       //白いクリップオブジェクトを作成
       const initialWorkspace = new fabric.Rect({
-        width: 900,
-        height: 1200,
+        width: 1920,
+        height: 1080,
         name: "clip",
         fill: "white",
         selectable: false,
@@ -59,9 +59,25 @@ const useEditor = () => {
         width: 100,
         height: 100,
         fill: "red",
+        rx: 10,
+        ry: 10,
       });
       initialCanvas.add(test);
       initialCanvas.centerObject(test);
+
+      const test2 = new fabric.Circle({
+        radius: 50,
+        fill: "blue",
+      });
+      initialCanvas.add(test2);
+      initialCanvas.centerObject(test2);
+
+      const text = new fabric.Text("今回のタイトル", {
+        left: 100,
+        top: 100,
+      });
+      initialCanvas.add(text);
+      initialCanvas.centerObject(text);
     },
     [],
   );

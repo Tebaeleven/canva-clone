@@ -8,6 +8,7 @@ import { Sidebar } from "@/app/features/editor/components/sidebar";
 import { Toolbar } from "@/app/features/editor/components/toolbar";
 import { Footer } from "@/app/features/editor/components/footer";
 import { ActiveTool } from "@/app/features/editor/components/types";
+import { ShapeSidebar } from "./shape-sidebar";
 
 export const Editor = () => {
   const [activeTool, setActiveTool] = useState<ActiveTool>("select");
@@ -54,6 +55,10 @@ export const Editor = () => {
       <Navbar activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
       <div className="absolute h-[calc(100%-68px)] w-full top-[68px] flex">
         <Sidebar
+          activeTool={activeTool}
+          onChangeActiveTool={onChangeActiveTool}
+        />
+        <ShapeSidebar
           activeTool={activeTool}
           onChangeActiveTool={onChangeActiveTool}
         />
