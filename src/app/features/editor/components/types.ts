@@ -1,0 +1,17 @@
+export type ActiveTool =
+  | "select"
+  | "design"
+  | "shapes"
+  | "text"
+  | "media"
+  | "draw"
+  | "fill"
+  | "stroke-color"
+  | "stroke-width"
+  | "font"
+  | "opacity"
+  | "filter"
+  | "settings"
+  | "ai"
+  | "remove-bg"
+  | "templates";
