@@ -4,24 +4,25 @@ import { useEffect } from "react";
 interface UseCanvasEventProps {
   canvas: fabric.Canvas | null;
   container: HTMLDivElement | null;
-  setSelectedObject: (object: fabric.Object[]) => void;
+  setSelectedObjects: (objects: fabric.Object[]) => void;
 }
 
 export const useCanvasEvent = ({
   canvas,
   container,
-  setSelectedObject,
+  setSelectedObjects,
 }: UseCanvasEventProps) => {
   useEffect(() => {
     if (canvas) {
       canvas.on("selection:created", (e) => {
-        setSelectedObject(e.selected || []);
+        setSelectedObjects(e.selected || []);
+        console.log(e.selected);
       });
       canvas.on("selection:updated", (e) => {
-        setSelectedObject(e.selected || []);
+        setSelectedObjects(e.selected || []);
       });
       canvas.on("selection:cleared", (e) => {
-        setSelectedObject([]);
+        setSelectedObjects([]);
       });
     }
 
@@ -30,5 +31,5 @@ export const useCanvasEvent = ({
       canvas?.off("selection:updated");
       canvas?.off("selection:cleared");
     };
-  }, [canvas, setSelectedObject]); //no need for this,this is from setState
+  }, [canvas, setSelectedObjects]); //no need for this,this is from setState
 };

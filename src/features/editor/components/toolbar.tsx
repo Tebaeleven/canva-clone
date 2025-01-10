@@ -15,18 +15,15 @@ export const Toolbar = ({
   activeTool,
   onChangeActiveTool,
 }: ToolbarProps) => {
-  const selectedObjects = editor?.canvas.getActiveObject();
+  const fillColor = editor?.fillColor;
+  console.log("selectedObjects", editor?.selectedObjects);
 
-  const getProperty = (property: any) => {
-    if (!selectedObjects) return null;
+  if (editor?.selectedObjects.length === 0) {
+    return (
+      <div className="shrink-0 h-[56px] border-b bg-white w-full flex items-center overflow-x-auto z-[49] p-2 gap-x-2"></div>
+    );
+  }
 
-    return selectedObjects.get(property);
-  };
-
-  const fillColor = getProperty("fill");
-  const fillColor2 = editor?.fillColor;
-
-  const [property, setProperty] = useState(fillColor);
 
   return (
     <div className="shrink-0 h-[56px] border-b bg-white w-full flex items-center overflow-x-auto z-[49] p-2 gap-x-2">
@@ -43,8 +40,7 @@ export const Toolbar = ({
             <div
               className="rounded-sm size-4 border"
               style={{
-                backgroundColor:
-                  typeof fillColor === "string" ? fillColor : "black",
+                backgroundColor: fillColor,
               }}
             ></div>
           </Button>
