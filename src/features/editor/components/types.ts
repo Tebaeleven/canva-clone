@@ -1,6 +1,17 @@
 import { fabric } from "fabric";
 import * as material from "material-colors";
 
+//これらのツールはオブジェクトが選択されていない時には表示しない
+export const selectionDependentTools = [
+  "fill",
+  "font",
+  "filter",
+  "opacity",
+  "remove-bg",
+  "stroke-color",
+  "stroke-width",
+];
+
 export const colors = [
   material.red["500"],
   material.pink["500"],
@@ -89,6 +100,10 @@ export const TRIANGLE_OPTIONS = {
   angle: 0,
 };
 
+export interface EditorHookProps {
+  clearSelectionCallback?: () => void;
+}
+
 export type BuildEditorProps = {
   canvas: fabric.Canvas;
   fillColor: string;
@@ -113,8 +128,8 @@ export interface Editor {
   addDiamond: () => void;
 
   canvas: fabric.Canvas;
-  fillColor: string;
-  strokeColor: string;
+  getActiveFillColor: () => string;
+  getActiveStrokeColor: () => string;
   strokeWidth: number;
   selectedObjects: fabric.Object[];
 }
