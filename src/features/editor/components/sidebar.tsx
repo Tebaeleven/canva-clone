@@ -6,6 +6,7 @@ import {
   Settings,
   Shapes,
   Sparkles,
+  Type,
 } from "lucide-react";
 import { SidebarItem } from "./sidebar-item";
 import { ActiveTool } from "./types";
@@ -33,6 +34,14 @@ export const Sidebar = ({ activeTool, onChangeActiveTool }: SidebarProps) => {
           isActive={activeTool === "media"}
           onClick={() => {
             onChangeActiveTool("media");
+          }}
+        />
+        <SidebarItem
+          icon={Type}
+          label="テキスト"
+          isActive={activeTool === "text"}
+          onClick={() => {
+            onChangeActiveTool("text");
           }}
         />
         <SidebarItem

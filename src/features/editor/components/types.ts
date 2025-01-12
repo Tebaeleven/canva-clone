@@ -1,6 +1,19 @@
 import { fabric } from "fabric";
 import * as material from "material-colors";
 
+export const fonts = [
+  "Arial",
+  "Helvetica",
+  "Arial Black",
+  "Times New Roman",
+  "Verdana",
+  "Impact",
+  "Comic Sans MS",
+  "Lucida Sans Unicode",
+  "Geneva",
+  "Lucida Console",
+];
+
 //これらのツールはオブジェクトが選択されていない時には表示しない
 export const selectionDependentTools = [
   "fill",
@@ -56,6 +69,12 @@ export type ActiveTool =
 export const FILL_COLOR = "rgba(0,0,0,1)";
 export const STROKE_COLOR = "rgba(0,0,0,1)";
 export const STROKE_WIDTH = 1;
+export const STROKE_DASH_ARRAY = [];
+
+//Text
+export const FONT_SIZE = 32;
+export const FONT_FAMILY = "Arial";
+export const FONT_WEIGHT = 400;
 
 export const CIRCLE_OPTIONS = {
   radius: 50,
@@ -100,6 +119,18 @@ export const TRIANGLE_OPTIONS = {
   angle: 0,
 };
 
+export const TEXT_OPTIONS = {
+  type: "textbox",
+  width: 100,
+  height: 100,
+  left: 100,
+  top: 100,
+  fill: FILL_COLOR,
+  angle: 0,
+  fontSize: FONT_SIZE,
+  fontFamily: FONT_FAMILY,
+};
+
 export interface EditorHookProps {
   clearSelectionCallback?: () => void;
 }
@@ -110,16 +141,48 @@ export type BuildEditorProps = {
   strokeColor: string;
   strokeWidth: number;
   selectedObjects: fabric.Object[];
+  strokeDashArray: number[];
+  fontFamily: string;
 
   setFillColor: (color: string) => void;
   setStrokeColor: (color: string) => void;
   setStrokeWidth: (width: number) => void;
+  setStrokeDashArray: (dashArray: number[]) => void;
+  setFontFamily: (fontFamily: string) => void;
 };
 
 export interface Editor {
+  //Text
+  changeFontUnderline: (value: boolean) => void;
+  getActiveFontUnderline: () => boolean;
+
+  changeFontLinethrough: (value: boolean) => void;
+  getActiveFontLinethrough: () => boolean;
+
+  changeTextAlign: (value: string) => void;
+  getActiveTextAlign: () => string;
+
+  changeFontStyle: (style: string) => void;
+  getActiveFontStyle: () => string;
+  changeFontWeight: (weight: number) => void;
+  getActiveFontWeight: () => number;
+  getActiveFontFamily: () => string;
+  changeFontFamily: (fontFamily: string) => void;
+  addText: (value: string, options?: fabric.ITextboxOptions) => void;
+
+  //Opacity
+  getActiveOpacity: () => number;
+  changeOpacity: (value: number) => void;
+
+  //レイヤー処理
+  bringForward: () => void;
+  sendBackwards: () => void;
+
   changeFillColor: (color: string) => void;
   changeStrokeColor: (color: string) => void;
   changeStrokeWidth: (width: number) => void;
+  changeStrokeDashArray: (value: number[]) => void;
+
   addCircle: () => void;
   addSoftRectangle: () => void;
   addRectangle: () => void;
@@ -130,6 +193,7 @@ export interface Editor {
   canvas: fabric.Canvas;
   getActiveFillColor: () => string;
   getActiveStrokeColor: () => string;
-  strokeWidth: number;
+  getActiveStrokeWidth: () => number;
+  getActiveStrokeDashArray: () => number[];
   selectedObjects: fabric.Object[];
 }
