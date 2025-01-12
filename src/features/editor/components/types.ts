@@ -159,6 +159,9 @@ export interface Editor {
   changeFontLinethrough: (value: boolean) => void;
   getActiveFontLinethrough: () => boolean;
 
+  changeFontSize: (value: number) => void;
+  getActiveFontSize: () => number;
+
   changeTextAlign: (value: string) => void;
   getActiveTextAlign: () => string;
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ActiveTool, Editor, FONT_WEIGHT } from "./types";
+import { ActiveTool, Editor, FONT_SIZE, FONT_WEIGHT } from "./types";
 import { Button } from "@/components/ui/button";
 import { Hint } from "@/components/hint";
 import { cn } from "@/lib/utils";
@@ -16,6 +16,7 @@ import {
   FaStrikethrough,
   FaUnderline,
 } from "react-icons/fa";
+import { FontSizeInput } from "./font-size-input";
 
 interface ToolbarProps {
   editor: Editor | undefined;
@@ -36,6 +37,7 @@ export const Toolbar = ({
   const initialFontUnderline = editor?.getActiveFontUnderline() || false;
   const initialFontLinethrough = editor?.getActiveFontLinethrough() || false;
   const initialTextAlign = editor?.getActiveTextAlign() || "left";
+  const initialFontSize = editor?.getActiveFontSize() || FONT_SIZE;
 
   const [properties, setProperties] = useState({
     fillColor: initialFillColor,
@@ -46,6 +48,7 @@ export const Toolbar = ({
     fontUnderline: initialFontUnderline,
     fontLinethrough: initialFontLinethrough,
     textAlign: initialTextAlign,
+    fontSize: initialFontSize,
   });
 
   const selectedObject = editor?.selectedObjects[0];
@@ -93,6 +96,19 @@ export const Toolbar = ({
 
     editor?.changeTextAlign(value);
     setProperties((current) => ({ ...current, textAlign: value }));
+  };
+
+  const onChangeFontSize = (value: number) => {
+    if (!selectedObject) {
+      return;
+    }
+
+    if (isNaN(value)) {
+      return;
+    }
+
+    editor?.changeFontSize(value);
+    setProperties((current) => ({ ...current, fontSize: value }));
   };
 
   const toggleUnderline = () => {
@@ -296,6 +312,14 @@ export const Toolbar = ({
               <FaAlignRight className="size-4" />
             </Button>
           </Hint>
+        </div>
+      )}
+      {isText && (
+        <div className="flex items-center h-full justify-center">
+          <FontSizeInput
+            value={properties.fontSize}
+            onChange={onChangeFontSize}
+          />
         </div>
       )}
 
