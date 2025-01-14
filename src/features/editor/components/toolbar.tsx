@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Hint } from "@/components/hint";
 import { cn } from "@/lib/utils";
 import { BsBorderWidth } from "react-icons/bs";
-import { ArrowDown, ArrowUp, ChevronDown } from "lucide-react";
+import { ArrowDown, ArrowUp, ChevronDown, Trash, Trash2 } from "lucide-react";
 import { RxTransparencyGrid } from "react-icons/rx";
 import { isTextType } from "../utils";
 import {
@@ -362,6 +362,20 @@ export const Toolbar = ({
             className={cn(activeTool === "opacity" && "bg-gray-100")}
           >
             <RxTransparencyGrid className="size-4" />
+          </Button>
+        </Hint>
+      </div>
+
+      <div className="flex items-center h-full justify-center">
+        <Hint label="削除" side="bottom" sideOffset={5}>
+          <Button
+            onClick={() => {
+              editor?.delete();
+            }}
+            size={"icon"}
+            variant={"ghost"}
+          >
+            <Trash2 className="size-4" />
           </Button>
         </Hint>
       </div>

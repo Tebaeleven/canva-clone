@@ -152,6 +152,9 @@ export type BuildEditorProps = {
 };
 
 export interface Editor {
+  //要素の削除
+  delete: () => void;
+
   //Text
   changeFontUnderline: (value: boolean) => void;
   getActiveFontUnderline: () => boolean;
