@@ -155,6 +155,9 @@ export interface Editor {
   //要素の削除
   delete: () => void;
 
+  //Image
+  addImage: (value: string) => void;
+
   //Text
   changeFontUnderline: (value: boolean) => void;
   getActiveFontUnderline: () => boolean;
