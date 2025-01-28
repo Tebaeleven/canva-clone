@@ -48,6 +48,32 @@ export const colors = [
   "transparent",
 ];
 
+export const filters = [
+  "none",
+  "polaroid",
+  "sepia",
+  "kodachrome",
+  "contrast",
+  "brightness",
+  "greyscale",
+  "brownie",
+  "vintage",
+  "technicolor",
+  "pixelate",
+  "invert",
+  "blur",
+  "sharpen",
+  "emboss",
+  "removecolor",
+  "blacknwhite",
+  "vibrance",
+  "blendcolor",
+  "huerotate",
+  "resize",
+  "saturation",
+  "gamma",
+];
+
 export type ActiveTool =
   | "select"
   | "design"
@@ -152,6 +178,11 @@ export type BuildEditorProps = {
 };
 
 export interface Editor {
+  
+  //フィルター
+  getActiveImageFilter: () => string[];
+  changeImageFilter: (value: string) => void;
+
   //要素の削除
   delete: () => void;
 

@@ -21,6 +21,7 @@ import {
 import { useCanvasEvent } from "./use-canvas-events";
 import { isTextType } from "../utils";
 import { ITextboxOptions } from "fabric/fabric-impl";
+import { createFilter } from "@/lib/utils";
 
 const buildEditor = ({
   canvas,
@@ -58,6 +59,31 @@ const buildEditor = ({
   };
 
   return {
+    getActiveImageFilter: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) {
+        return [];
+      }
+
+      // @ts-ignore
+      const value = selectedObject.get("filters") || [];
+
+      return value;
+    },
+    changeImageFilter: (value: string) => {
+      const objects = canvas.getActiveObjects();
+      objects.forEach((object) => {
+        if (object.type === "image") {
+          const imageObject = object as fabric.Image;
+          const effect = createFilter(value);
+
+          imageObject.filters = effect ? [effect] : [];
+          imageObject.applyFilters();
+          canvas.renderAll();
+        }
+      });
+    },
     addImage: (value: string) => {
       fabric.Image.fromURL(
         value,
