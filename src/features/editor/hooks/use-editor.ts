@@ -22,8 +22,11 @@ import { useCanvasEvent } from "./use-canvas-events";
 import { isTextType } from "../utils";
 import { ITextboxOptions } from "fabric/fabric-impl";
 import { createFilter } from "@/lib/utils";
+import { useClipboard } from "./use-clipboard";
 
 const buildEditor = ({
+  copy,
+  paste,
   canvas,
   fillColor,
   strokeColor,
@@ -59,6 +62,18 @@ const buildEditor = ({
   };
 
   return {
+    enableDrawingMode: () => {
+      canvas.discardActiveObject();
+      canvas.renderAll();
+      canvas.isDrawingMode = true;
+      canvas.freeDrawingBrush.width = strokeWidth;
+      canvas.freeDrawingBrush.color = strokeColor;
+    },
+    disableDrawingMode: () => {
+      canvas.isDrawingMode = false;
+    },
+    onCopy: () => copy(),
+    onPaste: () => paste(),
     getActiveImageFilter: () => {
       const selectedObject = selectedObjects[0];
 
@@ -275,7 +290,8 @@ const buildEditor = ({
       canvas.getActiveObjects().forEach((object) => {
         object.set({ strokeWidth: value });
       });
-      canvas.requestRenderAll();
+      canvas.freeDrawingBrush.width = value;
+      canvas.renderAll();
     },
     changeStrokeColor: (value: string) => {
       setStrokeColor(value);
@@ -288,7 +304,8 @@ const buildEditor = ({
 
         object.set({ stroke: value });
       });
-      canvas.requestRenderAll();
+      canvas.freeDrawingBrush.color = value;
+      canvas.renderAll();
     },
     changeStrokeDashArray: (value: number[]) => {
       setStrokeDashArray(value);
@@ -486,6 +503,7 @@ const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
   const [strokeDashArray, setStrokeDashArray] =
     useState<number[]>(STROKE_DASH_ARRAY);
 
+  const { copy, paste } = useClipboard({ canvas });
   useAutoResize({ canvas, container });
 
   useCanvasEvent({
@@ -498,6 +516,8 @@ const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
   const editor = useMemo(() => {
     if (canvas) {
       return buildEditor({
+        copy,
+        paste,
         canvas,
         fillColor,
         setFillColor,
@@ -520,6 +540,8 @@ const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
     strokeWidth,
     selectedObjects,
     fontFamily,
+    copy,
+    paste,
   ]);
 
   const init = useCallback(

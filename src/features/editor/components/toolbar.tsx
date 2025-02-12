@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Hint } from "@/components/hint";
 import { cn } from "@/lib/utils";
 import { BsBorderWidth } from "react-icons/bs";
-import { ArrowDown, ArrowUp, ChevronDown, Trash, Trash2 } from "lucide-react";
+import { ArrowDown, ArrowUp, ChevronDown, Copy, SquareSplitHorizontal, Trash, Trash2 } from "lucide-react";
 import { RxTransparencyGrid } from "react-icons/rx";
 import { isTextType } from "../utils";
 import {
@@ -341,6 +341,21 @@ export const Toolbar = ({
         </div>
       )}
 
+      {isImage && (
+        <div className="flex items-center h-full justify-center">
+          <Hint label="背景の削除" side="bottom" sideOffset={5}>
+            <Button
+              onClick={() => onChangeActiveTool("remove-bg")}
+              size={"icon"}
+              variant={"ghost"}
+              className={cn(activeTool === "remove-bg" && "bg-gray-100")}
+            >
+              <SquareSplitHorizontal className="size-4" />
+            </Button>
+          </Hint>
+        </div>
+      )}
+
       <div className="flex items-center h-full justify-center">
         <Hint label="レイヤーを下に移動" side="bottom" sideOffset={5}>
           <Button
@@ -380,6 +395,21 @@ export const Toolbar = ({
             className={cn(activeTool === "opacity" && "bg-gray-100")}
           >
             <RxTransparencyGrid className="size-4" />
+          </Button>
+        </Hint>
+      </div>
+
+      <div className="flex items-center h-full justify-center">
+        <Hint label="複製" side="bottom" sideOffset={5}>
+          <Button
+            onClick={() => {
+              editor?.onCopy();
+              editor?.onPaste();
+            }}
+            size={"icon"}
+            variant={"ghost"}
+          >
+            <Copy className="size-4" />
           </Button>
         </Hint>
       </div>

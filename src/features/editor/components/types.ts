@@ -162,6 +162,9 @@ export interface EditorHookProps {
 }
 
 export type BuildEditorProps = {
+  copy: () => void;
+  paste: () => void;
+
   canvas: fabric.Canvas;
   fillColor: string;
   strokeColor: string;
@@ -178,7 +181,14 @@ export type BuildEditorProps = {
 };
 
 export interface Editor {
-  
+  //ペンモード
+  enableDrawingMode: () => void;
+  disableDrawingMode: () => void;
+
+  //クリップボード
+  onCopy: () => void;
+  onPaste: () => void;
+
   //フィルター
   getActiveImageFilter: () => string[];
   changeImageFilter: (value: string) => void;

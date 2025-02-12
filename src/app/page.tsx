@@ -7,7 +7,11 @@ export default function Home() {
   const router = useRouter();
   return (
     <div>
-      <Button onClick={() => router.push("/editor/123")}>Go to Editor</Button>
+      <Button onClick={() => {
+        router.push("/editor/123")
+      }}>
+        Go to Editor
+      </Button>
     </div>
   );
 }
