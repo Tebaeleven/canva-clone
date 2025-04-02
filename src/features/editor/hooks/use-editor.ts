@@ -25,6 +25,7 @@ import { createFilter } from "@/lib/utils";
 import { useClipboard } from "./use-clipboard";
 
 const buildEditor = ({
+  autoZoom,
   copy,
   paste,
   canvas,
@@ -40,12 +41,12 @@ const buildEditor = ({
   fontFamily,
   setFontFamily,
 }: BuildEditorProps): Editor => {
-  const getWorkspace = (canvas: fabric.Canvas) => {
+  const getWorkspace = () => {
     return canvas.getObjects().find((object) => object.name === "clip");
   };
 
   const center = (object: fabric.Object) => {
-    const workspace = getWorkspace(canvas);
+    const workspace = getWorkspace();
     const center = workspace?.getCenterPoint();
 
     if (!center) return;
@@ -62,6 +63,18 @@ const buildEditor = ({
   };
 
   return {
+    getWorkspace,
+    changeSize: (value: { width: number; height: number }) => {
+      const workspace = getWorkspace();
+
+      workspace?.set(value);
+      autoZoom();
+    },
+    changeBackground: (value: string) => {
+      const workspace = getWorkspace();
+      workspace?.set({ fill: value });
+      canvas.renderAll();
+    },
     enableDrawingMode: () => {
       canvas.discardActiveObject();
       canvas.renderAll();
@@ -103,7 +116,7 @@ const buildEditor = ({
       fabric.Image.fromURL(
         value,
         (image) => {
-          const workspace = getWorkspace(canvas);
+          const workspace = getWorkspace();
 
           image.scaleToHeight(workspace?.height || 0);
           image.scaleToWidth(workspace?.width || 0);
@@ -253,7 +266,7 @@ const buildEditor = ({
       });
 
       canvas.renderAll();
-      const workspace = getWorkspace(canvas);
+      const workspace = getWorkspace();
       workspace?.sendToBack();
     },
     sendBackwards: () => {
@@ -262,7 +275,7 @@ const buildEditor = ({
       });
 
       canvas.renderAll();
-      const workspace = getWorkspace(canvas);
+      const workspace = getWorkspace();
       workspace?.sendToBack();
     },
 
@@ -504,7 +517,8 @@ const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
     useState<number[]>(STROKE_DASH_ARRAY);
 
   const { copy, paste } = useClipboard({ canvas });
-  useAutoResize({ canvas, container });
+
+  const { autoZoom } = useAutoResize({ canvas, container });
 
   useCanvasEvent({
     canvas,
@@ -516,6 +530,7 @@ const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
   const editor = useMemo(() => {
     if (canvas) {
       return buildEditor({
+        autoZoom,
         copy,
         paste,
         canvas,
@@ -542,6 +557,7 @@ const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
     fontFamily,
     copy,
     paste,
+    autoZoom,
   ]);
 
   const init = useCallback(
